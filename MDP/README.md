@@ -16,6 +16,9 @@ This script implements the synchronous non-distributed VI. The method takes envi
 
 This script implements the synchronous distributed VI. 
 
+![sequence dialog](http://www.plantuml.com/plantuml/proxy?src=https://gist.githubusercontent.com/takke/995d474a8ad72a724c8187cf21b1e238/raw)
+https://gist.github.com/takke/995d474a8ad72a724c8187cf21b1e238
+
 #### main_VI.py
 
 You can test synchronous VI w/o and w/ distributed computing by running this script. As optional, there are several sizes of MDP environments.

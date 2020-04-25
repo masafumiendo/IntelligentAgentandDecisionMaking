@@ -1,0 +1,11 @@
+@startuml
+TwitPane->MainActivity: Intent呼び出し
+MainActivity->MainActivity: PermissionCheck
+MainActivity->VideoEditActivity: Intent呼び出し
+VideoEditActivity->VideoEditActivity: 編集
+VideoEditActivity->ConvertActivity: Intent呼び出し
+ConvertActivity->ConvertActivity: 変換(頑張る)
+ConvertActivity-->VideoEditActivity: onActivityResult,\n結果のURI
+VideoEditActivity-->MainActivity: onActivityResult,\n結果のURI
+MainActivity-->TwitPane: onActivityResult,\n結果のURI
+@enduml

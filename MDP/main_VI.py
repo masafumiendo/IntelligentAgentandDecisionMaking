@@ -17,7 +17,7 @@ run_time = {}
 
 def main():
 
-    MAP = map_8
+    MAP = map_50
     map_size = MAP[1]
 
     beta = 0.999
@@ -37,7 +37,7 @@ def main():
     ray.shutdown()
     ray.init(include_webui=False, ignore_reinit_error=True, redis_max_memory=500000000, object_store_memory=5000000000)
 
-    MAP = map_110
+    MAP = map_50
     map_size = MAP[1]
 
     beta = 0.999
