@@ -13,11 +13,13 @@ map_32 = (MAPS["32x32"], 32)
 map_50 = (generate_map((50,50)), 50)
 map_110 = (generate_map((110,110)), 110)
 
-MAP = map_8
-map_size = MAP[1]
 run_time = {}
 
 def main():
+
+    MAP = map_8
+    map_size = MAP[1]
+
     beta = 0.999
     env = FrozenLakeEnv(desc=MAP[0], is_slippery=True)
     print("Game Map:")
@@ -34,6 +36,9 @@ def main():
 
     ray.shutdown()
     ray.init(include_webui=False, ignore_reinit_error=True, redis_max_memory=500000000, object_store_memory=5000000000)
+
+    MAP = map_110
+    map_size = MAP[1]
 
     beta = 0.999
     env = FrozenLakeEnv(desc=MAP[0], is_slippery=True)

@@ -8,4 +8,14 @@ Specific role of each script is listed as follows:
 
 This script defines the MDP environment. As mentioned in the above, the environment is expressed as grid-world. 
 
+#### sync_value_iteration.py
+
+This script implements the synchronous non-distributed VI. The method takes environment, discount factor, and threshold to stop the iteration and returns optimized state values with greedy policy.
+
 #### sync_distributed_iteration.py
+
+This script implements the synchronous distributed VI. 
+
+#### main_VI.py
+
+You can test synchronous VI w/o and w/ distributed computing by running this script. As optional, there are several sizes of MDP environments.
