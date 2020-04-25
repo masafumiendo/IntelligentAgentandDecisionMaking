@@ -2,7 +2,7 @@ import time
 from environment import FrozenLakeEnv, generate_map, MAPS
 from summarize_results import print_results
 from sync_value_iteration import sync_value_iteration
-from sync_parallel_value_iteraion import distribured_value_iteraion
+from sync_distributed_value_iteration import distribured_value_iteraion
 
 import numpy as np
 import ray
