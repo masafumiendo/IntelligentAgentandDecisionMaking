@@ -13,7 +13,6 @@ def print_results(v, pi, map_size, env, beta, name):
     print("Avereage discounted reward: {}\n".format(evaluate_policy_discounted(env, pi, discount_factor=beta)))
     print("State Value image view:\n")
     plt.imshow(np.array(v_np[:-1]).reshape((map_size, map_size)))
-    # plt.savefig('VI_state_' + str(map_size) + 'png', bbox_inches="tight", pad_inches=0.05)
     plt.show()
 
     # pickle.dump(v, open(name + "_" + str(map_size) + "_v.pkl", "wb"))
