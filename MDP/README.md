@@ -19,6 +19,20 @@ This script implements the synchronous distributed VI.
 ![sequence dialog](http://www.plantuml.com/plantuml/proxy?src=https://gist.githubusercontent.com/masafumiendo/a4066e10514c4cea564a7b9691f994ca/raw)
 https://gist.github.com/masafumiendo/a4066e10514c4cea564a7b9691f994ca
 
+<div class="flow">
+st=>start: Start:>http://www.google.com[blank]
+e=>end:>http://www.google.com
+op1=>operation: My Operation
+sub1=>subroutine: My Subroutine
+cond=>condition: Yes
+or No?:>http://www.google.com
+io=>inputoutput: catch something...
+
+st->op1->cond
+cond(yes)->io->e
+cond(no)->sub1(right)->op1
+</div>
+
 #### main_VI.py
 
 You can test synchronous VI w/o and w/ distributed computing by running this script. As optional, there are several sizes of MDP environments.
