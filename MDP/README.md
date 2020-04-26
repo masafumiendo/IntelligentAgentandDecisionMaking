@@ -16,8 +16,8 @@ This script implements the synchronous non-distributed VI. The method takes envi
 
 This script implements the synchronous distributed VI. 
 
-![sequence dialog](http://www.plantuml.com/plantuml/proxy?src=https://gist.githubusercontent.com/masafumiendo/604b6e0a5d0909e14ee75dff29701e5f/raw)
-https://gist.github.com/masafumiendo/604b6e0a5d0909e14ee75dff29701e5f
+![sequence dialog](http://www.plantuml.com/plantuml/proxy?src=https://gist.githubusercontent.com/masafumiendo/a4066e10514c4cea564a7b9691f994ca/raw)
+https://gist.github.com/masafumiendo/a4066e10514c4cea564a7b9691f994ca
 
 #### main_VI.py
 
