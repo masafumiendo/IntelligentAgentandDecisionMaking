@@ -129,14 +129,14 @@ def distribured_value_iteraion(env, beta=0.999, epsilon=0.01, workers_num=4):
         else:
             end_states.append((worker_num + 1) * batch)
 
-    VI_server_ = VI_server.remote(workers_num, start_states, end_states, epsilon)
+    _VI_server = VI_server.remote(workers_num, start_states, end_states, epsilon)
     data_id = ray.put((env, workers_num, beta, epsilon))
 
     w_ids = []
     for worker_index in range(workers_num):
-        w_id = VI_worker.remote(worker_index, VI_server_, data_id, start_states[worker_index], end_states[worker_index])
+        w_id = VI_worker.remote(worker_index, _VI_server, data_id, start_states[worker_index], end_states[worker_index])
         w_ids.append(w_id)
     ray.wait(w_ids, num_returns=workers_num, timeout=None)
 
-    v, pi = ray.get(VI_server_.get_value_and_policy.remote())
+    v, pi = ray.get(_VI_server.get_value_and_policy.remote())
     return v, pi
