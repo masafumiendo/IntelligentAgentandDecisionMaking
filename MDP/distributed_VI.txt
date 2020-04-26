@@ -1,7 +1,0 @@
-@startuml
-distributed_value_iteration->VI_server: call value server as actor
-VI_server->VI_worker: provide current state values
-VI_worker->VI_worker: Each worker computes its own state values with policy
-VI_worker->VI_server: update state values with optimized policy
-VI_server->distributed_value_iteration: provide converged state values with its policy
-@enduml
