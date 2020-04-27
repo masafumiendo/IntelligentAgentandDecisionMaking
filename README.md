@@ -6,6 +6,8 @@ This project aims to implement sequential decision making algorithms w/o and w/ 
 
 - Value Iteration (VI) for infinite horizon problems w/o distributed computing
 - Value Iteration (VI) for infinite horizon problems w/ distributed computing
+- Policy Iteration (PI) for infinite horizon problems w/o distributed computing
+- Policy Iteration (PI) for infinite horizon problems w/ distributed computing
 
 ### Reinforcement Learning
 
