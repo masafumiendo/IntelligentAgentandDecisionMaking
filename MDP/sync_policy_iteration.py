@@ -2,8 +2,8 @@ from copy import deepcopy
 import numpy as np
 import random
 
-def initialize_policy(S):
-    actions = [0, 1, 2, 3] # hard-coded
+def initialize_policy(S, A):
+    actions = list(range(A))
     pi = [0] * S
     for state_index in pi:
         pi[state_index] = random.choice(actions)
