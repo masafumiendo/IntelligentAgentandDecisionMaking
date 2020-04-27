@@ -6,17 +6,14 @@ import numpy as np
 import ray
 
 @ray.remote
-class PI_server(object):
+class PE_server(object):
 
     def __init__(self, workers_num, start_states, end_states, epsilon):
         self.v_current_per_worker = []
-        self.pi_per_worker = []
         self.v_new_per_worker = []
         for start_state, end_state in zip(start_states, end_states):
             self.v_current_per_worker.append([0] * (end_state - start_state))
-            self.pi_per_worker.append([0] * (end_state - start_state))
             self.v_new_per_worker.append([0] * (end_state - start_state))
-        self.pi_new_per_worker = deepcopy(self.pi_per_worker)
         self.workers_num = workers_num
         self.isEndEpisode = False
         self.isConvergence = False
@@ -25,11 +22,6 @@ class PI_server(object):
 
     def get_value(self):
         return list(itertools.chain.from_iterable(self.v_current_per_worker))
-
-    def get_value_and_policy(self):
-        v_current = list(itertools.chain.from_iterable(self.v_current_per_worker))
-        pi = list(itertools.chain.from_iterable(self.pi_per_worker))
-        return v_current, pi
 
     def get_value_with_stopping_condition(self, worker_index):
         isFinished = self.check_isFinished(worker_index)
@@ -81,16 +73,14 @@ class PI_server(object):
         return isConvergence
 
 @ray.remote
-def PI_worker(worker_index, PI_server, data, start_state, end_state, pi):
+def PE_worker(worker_index, PE_server, data, start_state, end_state, pi):
     env, workers_num, beta, epsilon = data
-    A = env.GetActionSpace()
-    S = env.GetStateSpace()
 
     isConvergence = False
     while True:
         isEndEpisode = False
         while isEndEpisode == False:
-            isEndEpisode = ray.get(PI_server.get_value_with_stopping_condition.remote(worker_index))
+            isEndEpisode = ray.get(PE_server.get_value_with_stopping_condition.remote(worker_index))
             if not isEndEpisode == False:
                 V, isConvergence = isEndEpisode
                 break
@@ -102,8 +92,6 @@ def PI_worker(worker_index, PI_server, data, start_state, end_state, pi):
         update_indices = list(range(start_state, end_state, 1))
 
         for state_index, update_state in enumerate(update_indices):
-            v_tmps = []
-
             reward = env.GetReward(update_state, pi[update_state])
             # Get successors' states with transition probabilities
             successors = env.GetSuccessors(update_state, pi[update_state])
@@ -113,7 +101,7 @@ def PI_worker(worker_index, PI_server, data, start_state, end_state, pi):
                 expected_value += successors[next_state_index][1] * V[successors[next_state_index][0]]
             update_vs[state_index] = reward + beta * expected_value
 
-        PI_server.update.remote(worker_index, update_vs)
+        PE_server.update.remote(worker_index, update_vs)
 
 def initialize_policy(S, A):
     actions = list(range(A))
@@ -141,17 +129,17 @@ def policy_evaluation(env, pi, beta=0.999, epsilon=0.01, workers_num=4):
         else:
             end_states.append((worker_num + 1) * batch)
 
-    _PI_server = PI_server.remote(workers_num, start_states, end_states, epsilon)
+    _PE_server = PE_server.remote(workers_num, start_states, end_states, epsilon)
     data_id = ray.put((env, workers_num, beta, epsilon))
 
     w_ids = []
     for worker_index in range(workers_num):
-        w_id = PI_worker.remote(worker_index, _PI_server, data_id, start_states[worker_index],
+        w_id = PE_worker.remote(worker_index, _PE_server, data_id, start_states[worker_index],
                                 end_states[worker_index], pi)
         w_ids.append(w_id)
     ray.wait(w_ids, num_returns=workers_num, timeout=None)
 
-    v, pi = ray.get(_PI_server.get_value_and_policy.remote())
+    v = ray.get(_PE_server.get_value.remote())
     return v
 
 def distributed_policy_iteration(env, beta=0.999, epsilon=0.01, workers_num=4):
