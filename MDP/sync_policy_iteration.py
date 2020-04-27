@@ -18,8 +18,8 @@ def initialize_q_pi(A, S):
 def policy_evaluation(env, pi, beta=0.999, epsilon=0.0001):
     S = env.GetStateSpace()
 
-    v = [0] * S
-    v_new = [0] * S
+    v_pi = [0] * S
+    v_pi_new = [0] * S
 
     error = float('inf')
 
@@ -32,12 +32,12 @@ def policy_evaluation(env, pi, beta=0.999, epsilon=0.0001):
             expected_value = 0
             # Compute cumulative expected value
             for next_state_index in range(len(successors)):
-                expected_value += successors[next_state_index][1] * v[successors[next_state_index][0]]
-            v_new[state] = reward + beta * expected_value
+                expected_value += successors[next_state_index][1] * v_pi[successors[next_state_index][0]]
+            v_pi_new[state] = reward + beta * expected_value
         # Compute Bellman error
-        error = max(np.abs([v_new_ - v_ for (v_new_, v_) in zip(v_new, v)]))
-        v = deepcopy(v_new)
-    return v
+        error = max(np.abs([_v_pi_new - _v_pi for (_v_pi_new, _v_pi) in zip(v_pi_new, v_pi)]))
+        v_pi = deepcopy(v_pi_new)
+    return v_pi
 
 def sync_policy_iteration(env, beta=0.999, epsilon=0.0001):
     A = env.GetActionSpace()
