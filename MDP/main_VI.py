@@ -43,7 +43,7 @@ def main():
     env.render()
 
     start_time = time.time()
-    v, pi = distribured_value_iteraion(env, beta=beta, workers_num=8)
+    v, pi = distribured_value_iteraion(env, beta=beta, workers_num=4)
     v_np, pi_np = np.array(v), np.array(pi)
     end_time = time.time()
     run_time['Sync distributed VI'] = end_time - start_time

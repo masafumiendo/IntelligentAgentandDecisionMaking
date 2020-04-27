@@ -43,7 +43,7 @@ def sync_policy_iteration(env, beta=0.999, epsilon=0.0001):
     A = env.GetActionSpace()
     S = env.GetStateSpace()
 
-    pi = initialize_policy(S)
+    pi = initialize_policy(S, A)
     isUpdate_policy = [True] * S
 
     pi_new = deepcopy(pi)

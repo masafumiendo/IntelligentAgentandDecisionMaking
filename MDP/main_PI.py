@@ -2,6 +2,7 @@ import time
 from environment import FrozenLakeEnv, generate_map, MAPS
 from summarize_results import print_results
 from sync_policy_iteration import sync_policy_iteration
+from sync_distributed_policy_iteration import distributed_policy_iteration
 
 import numpy as np
 import ray
@@ -32,6 +33,22 @@ def main():
     print("time:", run_time['Sync Policy Iteration'])
 
     print_results(v, pi, map_size, env, beta, 'sync_pi_gs')
+
+    ray.shutdown()
+    ray.init(include_webui=False, ignore_reinit_error=True, redis_max_memory=500000000, object_store_memory=5000000000)
+
+    beta = 0.999
+    env = FrozenLakeEnv(desc=MAP[0], is_slippery=True)
+    print("Game Map:")
+    env.render()
+
+    start_time = time.time()
+    v, pi = distributed_policy_iteration(env, beta=beta, workers_num=4)
+    v_np, pi_np = np.array(v), np.array(pi)
+    end_time = time.time()
+    run_time['Sync distributed PI'] = end_time - start_time
+    print("time:", run_time['Sync distributed PI'])
+    print_results(v, pi, map_size, env, beta, 'dist_pi')
 
     from copy import deepcopy
     temp_dict = deepcopy(run_time)
