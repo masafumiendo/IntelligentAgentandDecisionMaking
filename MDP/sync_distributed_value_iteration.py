@@ -7,14 +7,10 @@ import ray
 @ray.remote
 class VI_server(object):
 
-    def __init__(self, workers_num, start_states, end_states, epsilon):
-        self.v_current_per_worker = []
-        self.pi_per_worker = []
-        self.v_new_per_worker = []
-        for start_state, end_state in zip(start_states, end_states):
-            self.v_current_per_worker.append([0] * (end_state - start_state))
-            self.pi_per_worker.append([0] * (end_state - start_state))
-            self.v_new_per_worker.append([0] * (end_state - start_state))
+    def __init__(self, workers_num, S, epsilon):
+        self.v_current = [0] * S
+        self.pi = [0] * S
+        self.v_new = [0] * S
         self.workers_num = workers_num
         self.isEndEpisode = False
         self.isConvergence = False
@@ -22,19 +18,17 @@ class VI_server(object):
         self.epsilon = epsilon
 
     def get_value(self):
-        return list(itertools.chain.from_iterable(self.v_current_per_worker))
+        return self.v_current
 
     def get_value_and_policy(self):
-        v_current = list(itertools.chain.from_iterable(self.v_current_per_worker))
-        pi = list(itertools.chain.from_iterable(self.pi_per_worker))
-        return v_current, pi
+        return self.v_current, self.pi
 
     def get_value_with_stopping_condition(self, worker_index):
         isFinished = self.check_isFinished(worker_index)
         if isFinished:
             self.isEndEpisode = self.check_isEndEpisode()
             if self.isEndEpisode:
-                self.get_error_and_update(self.workers_num)
+                self.get_error_and_update()
                 self.isConvergence = self.check_isConvergence()
         else:
             self.areFinished[worker_index] = True
@@ -45,20 +39,19 @@ class VI_server(object):
 
         return self.get_value(), self.isConvergence
 
-    def update(self, worker_index, update_vs, update_pis):
-        self.v_new_per_worker[worker_index] = update_vs
-        self.pi_per_worker[worker_index] = update_pis
+    def update(self, update_indices, update_vs, update_pis):
+        for update_index, update_v, update_pi in zip(update_indices, update_vs, update_pis):
+            self.v_new[update_index] = update_v
+            self.pi[update_index] = update_pi
 
-    def get_error_and_update(self, workers_num):
+    def get_error_and_update(self):
         self.max_error = 0
-        for worker_index in range(workers_num):
-            errors = (np.array(self.v_new_per_worker[worker_index]) -
-                      np.array(self.v_current_per_worker[worker_index])).tolist()
-            error = max(np.abs(errors))
-            if error > self.max_error:
-                self.max_error = error
+        errors = np.array(self.v_new) - np.array(self.v_current).tolist()
+        error = max(np.abs(errors))
+        if error > self.max_error:
+            self.max_error = error
 
-        self.v_current_per_worker = deepcopy(self.v_new_per_worker)
+        self.v_current = deepcopy(self.v_new)
 
     def check_isFinished(self, worker_index):
         return self.areFinished[worker_index]
@@ -113,7 +106,7 @@ def VI_worker(worker_index, VI_server, data, start_state, end_state):
             update_vs[state_index] = max(v_tmps)
             update_pis[state_index] = v_tmps.index(max(v_tmps))
 
-        VI_server.update.remote(worker_index, update_vs, update_pis)
+        VI_server.update.remote(update_indices, update_vs, update_pis)
 
 def distribured_value_iteraion(env, beta=0.999, epsilon=0.01, workers_num=4):
     S = env.GetStateSpace()
@@ -129,7 +122,7 @@ def distribured_value_iteraion(env, beta=0.999, epsilon=0.01, workers_num=4):
         else:
             end_states.append((worker_num + 1) * batch)
 
-    _VI_server = VI_server.remote(workers_num, start_states, end_states, epsilon)
+    _VI_server = VI_server.remote(workers_num, S, epsilon)
     data_id = ray.put((env, workers_num, beta, epsilon))
 
     w_ids = []
