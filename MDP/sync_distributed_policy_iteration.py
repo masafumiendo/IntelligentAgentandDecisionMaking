@@ -1,5 +1,4 @@
 from copy import deepcopy
-import itertools
 import random
 
 import numpy as np
@@ -12,7 +11,6 @@ class PI_server(object):
         self.S = S
         self.A = A
         self.v_current = [0] * self.S
-        self.pi = [0] * self.S
         self.pi_new = [0] * self.S
         self.isUpdate_policy = [True] * self.S
         self.workers_num = workers_num
@@ -23,6 +21,7 @@ class PI_server(object):
         self.beta = beta
         self.env = env
 
+        self.pi = [0] * self.S
         self.actions = list(range(self.A))
         for state_index in self.pi:
             self.pi[state_index] = random.choice(self.actions)
@@ -36,21 +35,17 @@ class PI_server(object):
         for state in range(self.S):
             self.q_pi[state] = [0] * self.A
 
-    def get_value(self):
-        return self.v_current
-
     def get_policy(self):
         return self.pi
 
     def get_value_and_policy(self):
-        return self.v_current, self.pi
+        return self.evaluate_policy(), self.pi
 
     def get_value_with_stopping_condition(self, worker_index):
         isFinished = self.check_isFinished(worker_index)
         if isFinished:
             self.isEndEpisode = self.check_isEndEpisode()
             if self.isEndEpisode:
-                self.initialize_q_pi()
                 self.check_policy_and_update()
                 self.isConvergence = self.check_isConvergence()
         else:
