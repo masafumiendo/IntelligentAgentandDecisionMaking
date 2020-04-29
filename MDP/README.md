@@ -43,7 +43,7 @@ You can test synchronous PI w/o and w/ distributed computing by running this scr
 
 ***
 
-## Role of Other Scripts.
+## Role of Other Scripts
 
 #### environment.py
 
