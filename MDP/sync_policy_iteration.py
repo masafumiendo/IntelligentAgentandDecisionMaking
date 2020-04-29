@@ -49,8 +49,8 @@ def sync_policy_iteration(env, beta=0.999, epsilon=0.0001):
     pi_new = deepcopy(pi)
 
     while True:
-        q_pi = initialize_q_pi(A, S)
         v_pi = policy_evaluation(env, pi)
+        q_pi = initialize_q_pi(A, S)
         for state in range(S):
             for action in range(A):
                 reward = env.GetReward(state, action)

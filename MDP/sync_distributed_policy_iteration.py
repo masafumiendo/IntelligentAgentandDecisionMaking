@@ -10,7 +10,6 @@ class PI_server(object):
     def __init__(self, workers_num, S, A, epsilon, beta, env):
         self.S = S
         self.A = A
-        self.v_current = [0] * self.S
         self.pi_new = [0] * self.S
         self.isUpdate_policy = [True] * self.S
         self.workers_num = workers_num
@@ -35,33 +34,33 @@ class PI_server(object):
         for state in range(self.S):
             self.q_pi[state] = [0] * self.A
 
-    def get_policy(self):
-        return self.pi
-
     def get_value_and_policy(self):
-        return self.evaluate_policy(), self.pi
+        v_pi = self.evaluate_policy()
+        return v_pi, self.pi
 
     def get_value_with_stopping_condition(self, worker_index):
         isFinished = self.check_isFinished(worker_index)
+        v_pi = self.evaluate_policy()
         if isFinished:
             self.isEndEpisode = self.check_isEndEpisode()
             if self.isEndEpisode:
-                self.check_policy_and_update()
+                self.get_error_and_update()
                 self.isConvergence = self.check_isConvergence()
         else:
             self.areFinished[worker_index] = True
+            v_pi = self.evaluate_policy()
 
         if isFinished:
             if not self.isEndEpisode:
                 return self.isEndEpisode
 
-        return self.evaluate_policy(), self.isConvergence
+        return v_pi, self.isConvergence
 
     def evaluate_policy(self):
         v_pi = [0] * self.S
         v_pi_new = [0] * self.S
 
-        pi = self.get_policy()
+        pi = self.pi
 
         error = float('inf')
 
@@ -85,7 +84,7 @@ class PI_server(object):
         for update_index, update_q_pi in zip(update_indices, update_q_pis):
             self.q_pi[update_index] = update_q_pi
 
-    def check_policy_and_update(self):
+    def get_error_and_update(self):
         for state in range(self.S):
             self.pi_new[state] = self.q_pi[state].index(max(self.q_pi[state]))
             if self.pi_new[state] == self.pi[state]:
@@ -101,6 +100,7 @@ class PI_server(object):
             self.isEndEpisode = True
             # Reset
             self.areFinished = [False] * self.workers_num
+            self.initialize_q_pi()
         else:
             self.isEndEpisode = False
         return self.isEndEpisode
