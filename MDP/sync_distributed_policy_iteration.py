@@ -10,6 +10,7 @@ class PI_server(object):
     def __init__(self, workers_num, S, A, epsilon, beta, env):
         self.S = S
         self.A = A
+        self.v_current = [0] * self.S
         self.pi_new = [0] * self.S
         self.isUpdate_policy = [True] * self.S
         self.workers_num = workers_num
@@ -35,41 +36,37 @@ class PI_server(object):
             self.q_pi[state] = [0] * self.A
 
     def get_value_and_policy(self):
-        v_pi = self.evaluate_policy()
-        return v_pi, self.pi
+        return self.v_current, self.pi
 
     def get_value_with_stopping_condition(self, worker_index):
         isFinished = self.check_isFinished(worker_index)
-        v_pi = self.evaluate_policy()
         if isFinished:
             self.isEndEpisode = self.check_isEndEpisode()
             if self.isEndEpisode:
+                self.evaluate_policy()
                 self.get_error_and_update()
                 self.isConvergence = self.check_isConvergence()
         else:
             self.areFinished[worker_index] = True
-            v_pi = self.evaluate_policy()
 
         if isFinished:
             if not self.isEndEpisode:
                 return self.isEndEpisode
 
-        return v_pi, self.isConvergence
+        return self.v_current, self.isConvergence
 
     def evaluate_policy(self):
         v_pi = [0] * self.S
         v_pi_new = [0] * self.S
-
-        pi = self.pi
 
         error = float('inf')
 
         while (error > self.epsilon):
             error = 0
             for state in range(self.S):
-                reward = self.env.GetReward(state, pi[state])
+                reward = self.env.GetReward(state, self.pi[state])
                 # Get successors' states with transition probabilities
-                successors = self.env.GetSuccessors(state, pi[state])
+                successors = self.env.GetSuccessors(state, self.pi[state])
                 expected_value = 0
                 # Compute cumulative expected value
                 for next_state_index in range(len(successors)):
@@ -78,7 +75,8 @@ class PI_server(object):
             # Compute Bellman error
             error = max(np.abs([_v_pi_new - _v_pi for (_v_pi_new, _v_pi) in zip(v_pi_new, v_pi)]))
             v_pi = deepcopy(v_pi_new)
-        return v_pi
+
+        self.v_current = v_pi
 
     def update(self, update_indices, update_q_pis):
         for update_index, update_q_pi in zip(update_indices, update_q_pis):
@@ -106,6 +104,7 @@ class PI_server(object):
         return self.isEndEpisode
 
     def check_isConvergence(self):
+        print(self.isUpdate_policy)
         if not any(self.isUpdate_policy):
             isConvergence = True
         else:
