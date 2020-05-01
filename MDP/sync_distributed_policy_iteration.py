@@ -16,11 +16,11 @@ class PI_server(object):
         self.env = env
 
         self.v_pi = [0] * self.S
-        self.pi = [0] * self.S
+        self.pi_current = [0] * self.S
         self.pi_new = [0] * self.S
         actions = list(range(self.A))
         for state in range(self.S):
-            self.pi[state] = random.choice(actions)
+            self.pi_current[state] = random.choice(actions)
 
         self.isUpdate_policy = [True] * self.S
         self.isEndEpisode = False
@@ -28,23 +28,24 @@ class PI_server(object):
         self.areFinished = [False] * self.workers_num
 
     def get_value_and_policy(self):
-        return self.v_pi, self.pi
+        return self.v_pi, self.pi_current
 
-    def evaluate_policy(self, pi):
+    def evaluate_policy(self):
         v_pi = [0] * self.S
         v_pi_new = [0] * self.S
 
         error = float('inf')
         while (error > self.epsilon):
             for state in range(self.S):
-                reward = self.env.GetReward(state, pi[state])
-                successors = self.env.GetSuccessors(state, pi[state])
+                reward = self.env.GetReward(state, self.pi_current[state])
+                successors = self.env.GetSuccessors(state, self.pi_current[state])
                 expected_value = 0
                 for next_state_index in range(len(successors)):
                     expected_value += successors[next_state_index][1] * v_pi[successors[next_state_index][0]]
                 v_pi_new[state] = reward + self.beta * expected_value
             error = max(np.abs([_v_pi_new - _v_pi for (_v_pi_new, _v_pi) in zip(v_pi_new, v_pi)]))
             v_pi = deepcopy(v_pi_new)
+
         return v_pi
 
     def update(self, update_indices, update_pi):
@@ -53,12 +54,10 @@ class PI_server(object):
 
     def update_policy(self):
         for state in range(self.S):
-            if self.pi_new[state] == self.pi[state]:
+            if self.pi_new[state] == self.pi_current[state]:
                 self.isUpdate_policy[state] = False
 
-        self.pi = deepcopy(self.pi_new)
-
-        return self.pi
+        self.pi_current = deepcopy(self.pi_new)
 
     def check_isFinished(self, worker_index):
         return self.areFinished[worker_index]
@@ -84,9 +83,8 @@ class PI_server(object):
         if isFinished:
             self.isEndEpisode = self.check_isEndEpisode()
             if self.isEndEpisode:
-                pi = self.update_policy()
-                v_pi = self.evaluate_policy(pi)
-                self.v_pi = v_pi
+                self.update_policy()
+                self.v_pi = self.evaluate_policy()
                 self.isConvergence = self.check_isConvergence()
         else:
             self.areFinished[worker_index] = True
@@ -129,6 +127,7 @@ def PI_worker(worker_index, PI_server, data, start_state, end_state):
                 for next_state_index in range(len(successors)):
                     expected_value += successors[next_state_index][1] * v_pi[successors[next_state_index][0]]
                 update_q_pi[state_index][action] = reward + beta * expected_value
+            print(update_q_pi)
             update_pi[state_index] = update_q_pi[state_index].index(max(update_q_pi[state_index]))
 
         PI_server.update.remote(update_indices, update_pi)
