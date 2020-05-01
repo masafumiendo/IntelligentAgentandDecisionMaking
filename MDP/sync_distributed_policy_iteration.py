@@ -48,6 +48,23 @@ class PI_server(object):
 
         return v_pi
 
+    def get_value_with_stopping_condition(self, worker_index):
+        isFinished = self.check_isFinished(worker_index)
+        if isFinished:
+            self.isEndEpisode = self.check_isEndEpisode()
+            if self.isEndEpisode:
+                self.update_policy()
+                self.v_pi = self.evaluate_policy()
+                self.isConvergence = self.check_isConvergence()
+        else:
+            self.areFinished[worker_index] = True
+
+        if isFinished:
+            if not self.isEndEpisode:
+                return self.isEndEpisode
+
+        return self.v_pi, self.isConvergence
+
     def update(self, update_indices, update_pi):
         for update_index, _update_pi in zip(update_indices, update_pi):
             self.pi_new[update_index] = _update_pi
@@ -77,23 +94,6 @@ class PI_server(object):
         else:
             isConvergence = False
         return isConvergence
-
-    def get_value_with_stopping_condition(self, worker_index):
-        isFinished = self.check_isFinished(worker_index)
-        if isFinished:
-            self.isEndEpisode = self.check_isEndEpisode()
-            if self.isEndEpisode:
-                self.update_policy()
-                self.v_pi = self.evaluate_policy()
-                self.isConvergence = self.check_isConvergence()
-        else:
-            self.areFinished[worker_index] = True
-
-        if isFinished:
-            if not self.isEndEpisode:
-                return self.isEndEpisode
-
-        return self.v_pi, self.isConvergence
 
 @ray.remote
 def PI_worker(worker_index, PI_server, data, start_state, end_state):
@@ -127,7 +127,7 @@ def PI_worker(worker_index, PI_server, data, start_state, end_state):
                 for next_state_index in range(len(successors)):
                     expected_value += successors[next_state_index][1] * v_pi[successors[next_state_index][0]]
                 update_q_pi[state_index][action] = reward + beta * expected_value
-            print(update_q_pi)
+
             update_pi[state_index] = update_q_pi[state_index].index(max(update_q_pi[state_index]))
 
         PI_server.update.remote(update_indices, update_pi)
