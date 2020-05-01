@@ -51,7 +51,57 @@ class PI_server(object):
             error = max(np.abs([_v_pi_new - _v_pi for (_v_pi_new, _v_pi) in zip(v_pi_new, v_pi)]))
             v_pi = deepcopy(v_pi_new)
 
-        self.v_pi = v_pi
+        return v_pi
+
+    def update_q_function(self, update_indices, update_q_pi):
+        for update_index, _update_q_pi in zip(update_indices, update_q_pi):
+            self.q_pi[update_index] = _update_q_pi
+
+    def update_policy(self):
+        for state in range(self.S):
+            self.pi_new[state] = self.q_pi[state].index(max(self.q_pi[state]))
+            if self.pi_new[state] == self.pi[state]:
+                self.isUpdate_policy[state] = False
+
+        self.pi = deepcopy(self.pi_new)
+
+    def check_isFinished(self, worker_index):
+        return self.areFinished[worker_index]
+
+    def check_isEndEpisode(self):
+        if all(self.areFinished):
+            self.isEndEpisode = True
+            self.areFinished = [False] * self.workers_num
+            self.initialize_q_pi()
+        else:
+            self.isEndEpisode = False
+
+        return self.isEndEpisode
+
+    def check_isConvergence(self):
+        if not any(self.isUpdate_policy):
+            isConvergence = True
+        else:
+            isConvergence = False
+        return isConvergence
+
+    def get_value_with_stopping_condition(self, worker_index):
+        isFinished = self.check_isFinished(worker_index)
+        if isFinished:
+            self.isEndEpisode = self.check_isEndEpisode()
+            if self.isEndEpisode:
+                v_pi = self.evaluate_policy()
+                self.v_pi = v_pi
+                self.update_policy()
+                self.isConvergence = self.check_isConvergence()
+        else:
+            self.areFinished[worker_index] = True
+
+        if isFinished:
+            if not self.isEndEpisode:
+                return self.isEndEpisode
+
+        return self.v_pi, self.isConvergence
 
 @ray.remote
 def PI_worker(worker_index, PI_server, data, start_state, end_state):
@@ -85,7 +135,7 @@ def PI_worker(worker_index, PI_server, data, start_state, end_state):
                     expected_value += successors[next_state_index][1] * v_pi[successors[next_state_index][0]]
                 update_q_pi[state_index][action] = reward + beta * expected_value
 
-        PI_server.update.remote(update_indices, update_q_pi)
+        PI_server.update_q_function.remote(update_indices, update_q_pi)
 
 def distributed_policy_iteration(env, beta=0.999, epsilon=0.01, workers_num=4):
     S = env.GetStateSpace()
@@ -99,7 +149,7 @@ def distributed_policy_iteration(env, beta=0.999, epsilon=0.01, workers_num=4):
         if worker_num == workers_num - 1:
             end_states.append(S)
         else:
-            end_states.append(end_states(worker_num + 1) * batch)
+            end_states.append((worker_num + 1) * batch)
 
     _PI_server = PI_server.remote(workers_num, S, A, epsilon, beta, env)
     data_id = ray.put((env, workers_num, beta, epsilon))

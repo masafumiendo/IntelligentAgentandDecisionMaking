@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7aa7ea69-9fa2-4bb2-85f3-a4ee2e670979" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/MDP/sync_distributed_policy_iteration_old.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MDP/sync_distributed_policy_iteration.py" beforeDir="false" afterPath="$PROJECT_DIR$/MDP/sync_distributed_policy_iteration.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MDP/sync_distributed_policy_iteration_old.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,14 +18,26 @@
         <state>
           <splitter split-orientation="horizontal" split-proportion="0.5">
             <split-first>
-              <leaf>
+              <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
                 <file pinned="false" current-in-tab="true">
                   <entry file="file://$PROJECT_DIR$/MDP/sync_policy_iteration.py">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="638">
-                        <caret line="51" column="24" selection-start-line="51" selection-start-column="24" selection-end-line="51" selection-end-column="24" />
+                      <state relative-caret-position="37">
+                        <caret line="15" column="15" lean-forward="true" selection-start-line="15" selection-start-column="15" selection-end-line="15" selection-end-column="15" />
                         <folding>
                           <element signature="e#0#25#0" expanded="true" />
+                        </folding>
+                      </state>
+                    </provider>
+                  </entry>
+                </file>
+                <file pinned="false" current-in-tab="false">
+                  <entry file="file://$PROJECT_DIR$/MDP/main_PI.py">
+                    <provider selected="true" editor-type-id="text-editor">
+                      <state relative-caret-position="98">
+                        <caret line="19" column="15" lean-forward="true" selection-start-line="19" selection-start-column="15" selection-end-line="19" selection-end-column="15" />
+                        <folding>
+                          <element signature="e#0#11#0" expanded="true" />
                         </folding>
                       </state>
                     </provider>
@@ -34,12 +46,12 @@
               </leaf>
             </split-first>
             <split-second>
-              <leaf>
+              <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
                 <file pinned="false" current-in-tab="true">
                   <entry file="file://$PROJECT_DIR$/MDP/sync_distributed_value_iteration.py">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="1440">
-                        <caret line="96" column="54" selection-start-line="96" selection-start-column="54" selection-end-line="96" selection-end-column="54" />
+                      <state relative-caret-position="298">
+                        <caret line="25" column="41" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="41" />
                         <folding>
                           <element signature="e#0#25#0" expanded="true" />
                         </folding>
@@ -55,49 +67,32 @@
     </window>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/MDP/sync_distributed_policy_iteration_old.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1222">
-                  <caret line="116" column="28" selection-start-line="116" selection-start-column="28" selection-end-line="116" selection-end-column="28" />
-                  <folding>
-                    <element signature="e#0#25#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/MDP/sync_distributed_policy_iteration.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="253">
-                  <caret line="64" column="36" selection-start-line="64" selection-start-column="36" selection-end-line="64" selection-end-column="36" />
-                  <folding>
-                    <element signature="e#0#25#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/MDP/policy_evaluation.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state>
-                  <caret column="9" selection-start-column="9" selection-end-column="9" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/MDP/sync_distributed_policy_iteration.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="584">
+              <caret line="97" column="49" lean-forward="true" selection-start-line="97" selection-start-column="49" selection-end-line="97" selection-end-column="49" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MDP/environment.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3405">
+              <caret line="227" column="26" selection-start-line="227" selection-start-column="22" selection-end-line="227" selection-end-column="26" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -116,7 +111,6 @@
       <find>update_state</find>
       <find>integrate_policy</find>
       <find>v_current_per_worker</find>
-      <find>pi_new</find>
       <find>get_error</find>
       <find>per</find>
       <find>q_pi_per_worker</find>
@@ -138,6 +132,7 @@
       <find>get_value_and_policy</find>
       <find>self.pi</find>
       <find>self.v_current</find>
+      <find>pi_new</find>
     </findStrings>
     <replaceStrings>
       <replace>_VI_server</replace>
@@ -166,9 +161,9 @@
         <option value="$PROJECT_DIR$/MDP/main_VI.py" />
         <option value="$PROJECT_DIR$/MDP/sync_distributed_value_iteration.py" />
         <option value="$PROJECT_DIR$/MDP/main_PI.py" />
-        <option value="$PROJECT_DIR$/MDP/sync_policy_iteration.py" />
         <option value="$PROJECT_DIR$/MDP/sync_distributed_policy_iteration_old.py" />
         <option value="$PROJECT_DIR$/MDP/README.md" />
+        <option value="$PROJECT_DIR$/MDP/sync_policy_iteration.py" />
         <option value="$PROJECT_DIR$/MDP/sync_distributed_policy_iteration.py" />
       </list>
     </option>
@@ -215,7 +210,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1440" y="-662" width="1920" height="1080" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.1269089" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -228,7 +222,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.18613862" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.14851485" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32970297" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -250,16 +244,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MDP/environment.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3300">
-          <caret line="227" column="26" selection-start-line="227" selection-start-column="22" selection-end-line="227" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/MDP/sync_value_iteration.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -274,24 +258,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="12" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MDP/main_PI.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="622">
-          <caret line="45" column="40" selection-start-line="45" selection-start-column="40" selection-end-line="45" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MDP/sync_distributed_policy_iteration_old.py" />
-    <entry file="file://$PROJECT_DIR$/MDP/main_VI.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="22" selection-start-line="2" selection-start-column="5" selection-end-line="2" selection-end-column="22" />
         </state>
       </provider>
     </entry>
@@ -312,47 +278,74 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/MDP/policy_evaluation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/MDP/sync_distributed_policy_iteration_old.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1222">
-          <caret line="116" column="28" selection-start-line="116" selection-start-column="28" selection-end-line="116" selection-end-column="28" />
+        <state relative-caret-position="618">
+          <caret line="166" column="18" lean-forward="true" selection-start-line="166" selection-start-column="18" selection-end-line="166" selection-end-column="18" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MDP/main_VI.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="22" selection-start-line="2" selection-start-column="5" selection-end-line="2" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/MDP/sync_distributed_value_iteration.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1440">
-          <caret line="96" column="54" selection-start-line="96" selection-start-column="54" selection-end-line="96" selection-end-column="54" />
+        <state relative-caret-position="298">
+          <caret line="25" column="41" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="41" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MDP/policy_evaluation.py">
+    <entry file="file://$PROJECT_DIR$/MDP/environment.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="9" selection-start-column="9" selection-end-column="9" />
+        <state relative-caret-position="3405">
+          <caret line="227" column="26" selection-start-line="227" selection-start-column="22" selection-end-line="227" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MDP/sync_distributed_policy_iteration.py">
+    <entry file="file://$PROJECT_DIR$/MDP/main_PI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="64" column="36" selection-start-line="64" selection-start-column="36" selection-end-line="64" selection-end-column="36" />
+        <state relative-caret-position="98">
+          <caret line="19" column="15" lean-forward="true" selection-start-line="19" selection-start-column="15" selection-end-line="19" selection-end-column="15" />
           <folding>
-            <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/MDP/sync_policy_iteration.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="638">
-          <caret line="51" column="24" selection-start-line="51" selection-start-column="24" selection-end-line="51" selection-end-column="24" />
+        <state relative-caret-position="37">
+          <caret line="15" column="15" lean-forward="true" selection-start-line="15" selection-start-column="15" selection-end-line="15" selection-end-column="15" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MDP/sync_distributed_policy_iteration.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="584">
+          <caret line="97" column="49" lean-forward="true" selection-start-line="97" selection-start-column="49" selection-end-line="97" selection-end-column="49" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
