@@ -18,34 +18,27 @@ class PI_server(object):
         self.v_pi = [0] * self.S
         self.pi = [0] * self.S
         self.pi_new = [0] * self.S
-        self.q_pi = [0] * self.S
         actions = list(range(self.A))
         for state in range(self.S):
             self.pi[state] = random.choice(actions)
-            self.q_pi[state] = [0] * self.A
 
         self.isUpdate_policy = [True] * self.S
         self.isEndEpisode = False
         self.isConvergence = False
         self.areFinished = [False] * self.workers_num
 
-    def initialize_q_pi(self):
-        self.q_pi = [0] * self.S
-        for state in range(self.S):
-            self.q_pi[state] = [0] * self.A
-
     def get_value_and_policy(self):
         return self.v_pi, self.pi
 
-    def evaluate_policy(self):
+    def evaluate_policy(self, pi):
         v_pi = [0] * self.S
         v_pi_new = [0] * self.S
 
         error = float('inf')
         while (error > self.epsilon):
             for state in range(self.S):
-                reward = self.env.GetReward(state, self.pi[state])
-                successors = self.env.GetSuccessors(state, self.pi[state])
+                reward = self.env.GetReward(state, pi[state])
+                successors = self.env.GetSuccessors(state, pi[state])
                 expected_value = 0
                 for next_state_index in range(len(successors)):
                     expected_value += successors[next_state_index][1] * v_pi[successors[next_state_index][0]]
@@ -54,17 +47,18 @@ class PI_server(object):
             v_pi = deepcopy(v_pi_new)
         return v_pi
 
-    def update_q_function(self, update_indices, update_q_pi):
-        for update_index, _update_q_pi in zip(update_indices, update_q_pi):
-            self.q_pi[update_index] = _update_q_pi
+    def update(self, update_indices, update_pi):
+        for update_index, _update_pi in zip(update_indices, update_pi):
+            self.pi_new[update_index] = _update_pi
 
     def update_policy(self):
         for state in range(self.S):
-            self.pi_new[state] = self.q_pi[state].index(max(self.q_pi[state]))
             if self.pi_new[state] == self.pi[state]:
                 self.isUpdate_policy[state] = False
 
         self.pi = deepcopy(self.pi_new)
+
+        return self.pi
 
     def check_isFinished(self, worker_index):
         return self.areFinished[worker_index]
@@ -73,7 +67,6 @@ class PI_server(object):
         if all(self.areFinished):
             self.isEndEpisode = True
             self.areFinished = [False] * self.workers_num
-            self.initialize_q_pi()
         else:
             self.isEndEpisode = False
 
@@ -91,9 +84,9 @@ class PI_server(object):
         if isFinished:
             self.isEndEpisode = self.check_isEndEpisode()
             if self.isEndEpisode:
-                v_pi = self.evaluate_policy()
+                pi = self.update_policy()
+                v_pi = self.evaluate_policy(pi)
                 self.v_pi = v_pi
-                self.update_policy()
                 self.isConvergence = self.check_isConvergence()
         else:
             self.areFinished[worker_index] = True
@@ -125,6 +118,7 @@ def PI_worker(worker_index, PI_server, data, start_state, end_state):
         update_q_pi = [0] * (end_state - start_state)
         for state in range(end_state - start_state):
             update_q_pi[state] = [0] * A
+        update_pi = [0] * (end_state - start_state)
         update_indices = list(range(start_state, end_state, 1))
 
         for state_index, update_state in enumerate(update_indices):
@@ -135,8 +129,9 @@ def PI_worker(worker_index, PI_server, data, start_state, end_state):
                 for next_state_index in range(len(successors)):
                     expected_value += successors[next_state_index][1] * v_pi[successors[next_state_index][0]]
                 update_q_pi[state_index][action] = reward + beta * expected_value
+            update_pi[state_index] = update_q_pi[state_index].index(max(update_q_pi[state_index]))
 
-        PI_server.update_q_function.remote(update_indices, update_q_pi)
+        PI_server.update.remote(update_indices, update_pi)
 
 def distributed_policy_iteration(env, beta=0.999, epsilon=0.01, workers_num=4):
     S = env.GetStateSpace()
