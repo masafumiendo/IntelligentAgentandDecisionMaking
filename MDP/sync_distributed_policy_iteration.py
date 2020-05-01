@@ -19,7 +19,9 @@ class PI_server(object):
         self.pi = [0] * self.S
         self.pi_new = [0] * self.S
         self.q_pi = [0] * self.S
+        actions = list(range(self.A))
         for state in range(self.S):
+            self.pi[state] = random.choice(actions)
             self.q_pi[state] = [0] * self.A
 
         self.isUpdate_policy = [True] * self.S
@@ -50,7 +52,6 @@ class PI_server(object):
                 v_pi_new[state] = reward + self.beta * expected_value
             error = max(np.abs([_v_pi_new - _v_pi for (_v_pi_new, _v_pi) in zip(v_pi_new, v_pi)]))
             v_pi = deepcopy(v_pi_new)
-
         return v_pi
 
     def update_q_function(self, update_indices, update_q_pi):

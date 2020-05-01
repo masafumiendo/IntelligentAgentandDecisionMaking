@@ -17,9 +17,6 @@ class VI_server(object):
         self.areFinished = [False] * workers_num
         self.epsilon = epsilon
 
-    def get_value(self):
-        return self.v_current
-
     def get_value_and_policy(self):
         return self.v_current, self.pi
 
@@ -37,7 +34,7 @@ class VI_server(object):
             if not self.isEndEpisode:
                 return self.isEndEpisode
 
-        return self.get_value(), self.isConvergence
+        return self.v_current, self.isConvergence
 
     def update(self, update_indices, update_vs, update_pis):
         for update_index, update_v, update_pi in zip(update_indices, update_vs, update_pis):
