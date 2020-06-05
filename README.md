@@ -6,15 +6,16 @@ This project aims to implement sequential decision making algorithms w/o and w/ 
 
 - Value Iteration (VI) for infinite horizon problems w/o distributed computing
 - Value Iteration (VI) for infinite horizon problems w/ distributed computing
-- Policy Iteration (PI) for infinite horizon problems w/o distributed computing
-- Policy Iteration (PI) for infinite horizon problems w/ distributed computing
+- Policy Iteration (PI) for infinite horizon problems
 
-### Reinforcement Learning
+### Reinforcement Learning w/ Q Table
 
+- SARSA algorithm
+- Q-Learning algorithm w/o distributed computing
+- Q-Learning algorithm w/ distributed computing
 
-### Monte-Carlo Planning
+### Reinforcement Learning w/ Function Approximation
 
-
-Current progress is to implement VI w/o and w/ distributed computation. Other algorithms will be implemented in future.
-
+- Deep Q-Network w/o distributed computing 
+- Deep Q-Network w/ distributed computing
 

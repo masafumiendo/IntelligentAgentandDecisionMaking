@@ -1,42 +1,53 @@
-# Synchronous Policy Optimization w/o and w/ Distributed Computing
+# Model Free Reinforcement Learning w/ Q-Table
 
-This folder, named **MDP** implements two types of policy optimization methods for MDP environments: synchronous value iteration (VI) and policy iteration (PI).
-Here, the grid-world called **FrozenLake** is regarded as the target MDP environment. Specific role of each script is listed as follows:
+This folder, named **Model_Free_RL_w_Q_Table** implements two types of tabular based model free RL algorithm named 
+**SARSA** and **Q-Learning**. Here, the grid-world called **FrozenLake** is regarded as the target MDP environment. Specific role of each script is listed as follows:
+
 
 ***
 
-## Synchronous Value Iteration
+## Temporal Difference Learning
 
-The first algorithm for the policy optimization in the given MDP is **synchronous value iteration (VI)** based on Bellman backups. 
-The optimized policy is obtained as a greedy policy. Following three files are main algorithms of synchronous VI and for executing them at one time.
+Temporal difference (TD) is an algorithm that is used for updating the state value function of the MDP. 
 
-#### sync_value_iteration.py
+#### TD_agent.py
 
-This script implements the synchronous non-distributed VI. The method takes environment, discount factor, and threshold to stop the iteration and returns optimized state values with greedy policy.
+This script implements explore-exploit policy and a method named **learn_and_evaluate** for the TD agent to 
+learn and evaluate its policy. 
 
-#### sync_distributed_value_iteration.py
+***
 
-This script implements the synchronous distributed VI. Detailed description will be provided in future.
+## SARSA
 
-#### main_VI.py
+The first algorithm of model-free RL is **SARSA**. SARSA is a on-policy algorithm, which aims to learn
+the value of the policy being used to collect data. The following three files are main algorithms of SARSA 
+and executing it.
+
+#### SARSA.py
+
+This script implements 
+
+#### main_SARSA.py
 
 You can test synchronous VI w/o and w/ distributed computing by running this script. As optional, there are several sizes of MDP environments.
 
 ***
 
-## Synchronous Policy Iteration
+## Q-Learning
 
 The second algorithm for the policy optimization in the given MDP is **synchronous policy iteration (PI)**. First, a random policy is set as the initial policy.
 The policy is evaluated with restricted Bellman backups then improved using Q-function. Following three files are main algorithms of synchronous VI and for executing them at one time.
 
-#### sync_policy_iteration.py
+#### Q_Learning.py
 
 This script implements the synchronous non-distributed PI. The method takes environment, discount factor, and threshold to stop the iteration and returns optimized state values with greedy policy.
 
 
-#### main_PI.py
+#### distributed_Q_Learning.py
 
 You can test synchronous PI w/o distributed computing by running this script. As optional, there are several sizes of MDP environments.
+
+#### main_Q_Learning.py
 
 ***
 
