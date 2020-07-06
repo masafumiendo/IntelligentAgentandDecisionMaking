@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7aa7ea69-9fa2-4bb2-85f3-a4ee2e670979" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Model_Free_RL_Function_Approximation/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/IntelligentAgentandDecisionMaking.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/IntelligentAgentandDecisionMaking.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model_Free_RL_Function_Approximation/CartPole-v0/best_model.pt" beforeDir="false" afterPath="$PROJECT_DIR$/Model_Free_RL_Function_Approximation/CartPole-v0/best_model.pt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model_Free_RL_Function_Approximation/CartPole-v0/results.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Model_Free_RL_Function_Approximation/CartPole-v0/results.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model_Free_RL_Function_Approximation/main_distributed_DQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model_Free_RL_Function_Approximation/main_distributed_DQN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model_Free_RL_Function_Approximation/plot_result.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model_Free_RL_Function_Approximation/plot_result.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model_Free_RL_Q_Table/summarize_results.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model_Free_RL_Q_Table/summarize_results.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-    </list>
+    <list default="true" id="7aa7ea69-9fa2-4bb2-85f3-a4ee2e670979" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,8 +36,8 @@
         <entry file="file://$PROJECT_DIR$/Model_Free_RL_Function_Approximation/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="455">
-                <caret line="32" column="43" selection-start-line="32" selection-start-column="43" selection-end-line="32" selection-end-column="43" />
+              <first_editor relative-caret-position="95">
+                <caret line="8" column="23" lean-forward="true" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
               </first_editor>
               <second_editor />
             </state>
@@ -539,8 +529,8 @@
     <entry file="file://$PROJECT_DIR$/Model_Free_RL_Function_Approximation/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="455">
-            <caret line="32" column="43" selection-start-line="32" selection-start-column="43" selection-end-line="32" selection-end-column="43" />
+          <first_editor relative-caret-position="95">
+            <caret line="8" column="23" lean-forward="true" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
           </first_editor>
           <second_editor />
         </state>
