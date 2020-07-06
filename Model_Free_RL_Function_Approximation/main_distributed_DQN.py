@@ -27,8 +27,8 @@ def main():
     env = CartPoleEnv()
     env.reset()
 
-    cw_num = 8
-    ew_num = 8
+    cw_num = 4
+    ew_num = 4
     training_episodes, test_interval, trials = 10000, 50, 30
     agent = distributed_DQN_agent(env, hyperparams_CartPole, cw_num, ew_num, training_episodes, test_interval, trials)
     start_time = time.time()

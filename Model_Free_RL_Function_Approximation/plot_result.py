@@ -7,7 +7,6 @@ def plot_result(total_rewards, learning_num, legend):
         episodes.append(i * learning_num + 1)
 
     plt.figure(num=1)
-    fig, ax = plt.subplots()
     plt.plot(episodes, total_rewards)
     plt.title('performance')
     plt.legend(legend)

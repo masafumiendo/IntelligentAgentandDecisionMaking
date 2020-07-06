@@ -10,12 +10,11 @@ This project aims to implement sequential decision making algorithms w/o and w/ 
 
 ### Reinforcement Learning w/ Q Table
 
-- SARSA algorithm
-- Q-Learning algorithm w/o distributed computing
-- Q-Learning algorithm w/ distributed computing
+- SARSA
+- Q-Learning w/o distributed computing
+- Q-Learning w/ distributed computing
 
 ### Reinforcement Learning w/ Function Approximation
 
 - Deep Q-Network w/o distributed computing 
 - Deep Q-Network w/ distributed computing
-
